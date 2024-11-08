@@ -1,0 +1,52 @@
+
+name: Build and compile LaTeX documentation and release PDF
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    env:
+        FILE_NAME: Latex-Documentation
+    permissions:
+      contents: write
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: dokument.tex
+      
+      - name: Install ghostscript
+        run: sudo apt-get install -y ghostscript
+      
+      - name: Rename generated pdf file
+        run: mv dokument.pdf $FILE_NAME.pdf
+      
+      - name: Compress PDF
+        run: gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile="$FILE_NAME-compressed.pdf" "$FILE_NAME.pdf"
+
+      - run: |
+          newest_tag=$(curl -s https://api.github.com/repos/${{ secrets.OWNER }}/${{ secrets.REPO }}/releases/latest | jq -r '.tag_name')
+          echo "NEWEST_TAG=$newest_tag" >> $GITHUB_ENV
+
+
+      - name: Release the pdf
+        uses: ncipollo/release-action@v1
+        with:
+            artifacts: "$FILE_NAME.pdf, $FILE_NAME-compressed.pdf"
+            allowUpdates: true
+
+      - name: Release documentaion on other repo
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{env.NEWEST_TAG}}
+          files: |
+            ./$FILE_NAME.pdf
+            ./$FILE_NAME-compressed.pdf
+          repository: ${{ secrets.OWNER }}/${{ secrets.REPO }}
+          token: ${{ secrets.PAT }}

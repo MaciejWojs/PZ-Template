@@ -45,8 +45,8 @@ jobs:
         if: steps.docker_cache.outputs.cache-hit != 'true'
         run: docker pull ghcr.io/xu-cheng/texlive-full:latest
       
-      - name: Check if tag exists and skip remaining steps if true
-        if: env.IS_TAG == 'true'
+      - name: Check if tag doesn't exists and skip remaining steps if true
+        if: env.IS_TAG == 'false'
         run: echo "Tag detected, skipping remaining steps." && exit 0
 
       - name: Compile LaTeX document

@@ -44,12 +44,9 @@ jobs:
       - name: Pull TeX Live Docker image if not cached
         if: steps.docker_cache.outputs.cache-hit != 'true'
         run: docker pull ghcr.io/xu-cheng/texlive-full:latest
-      
-      - name: Check if tag doesn't exists and skip remaining steps if true
-        if: env.IS_TAG == 'false'
-        run: echo "Tag detected, skipping remaining steps." && exit 0
 
       - name: Compile LaTeX document
+        if: env.IS_TAG == 'true'
         uses: xu-cheng/latex-action@v3
         with:
           root_file: dokument.tex
@@ -57,9 +54,11 @@ jobs:
       
       
       - name: Rename generated pdf file
+        if: env.IS_TAG == 'true'
         run: mv dokument.pdf ${{env.FILE_NAME}}.pdf
       
       - name: Compress PDF
+        if: env.IS_TAG == 'true'
         run: gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.5 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile="${{env.FILE_NAME}}-compressed.pdf" "${{env.FILE_NAME}}.pdf"
 
       - run: |
@@ -68,12 +67,14 @@ jobs:
 
 
       - name: Release the pdf
+        if: env.IS_TAG == 'true'
         uses: ncipollo/release-action@v1
         with:
             artifacts: "${{env.FILE_NAME}}.pdf, ${{env.FILE_NAME}}-compressed.pdf"
             allowUpdates: true
 
       - name: Release documentaion on other repo
+        if: env.IS_TAG == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{env.NEWEST_TAG}}

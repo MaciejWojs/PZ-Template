@@ -101,12 +101,12 @@
 \ref{#1:#2} (s. \pageref{#1:#2})
 }
 
-\newcommand*{\OznaczZdjecie}[1]{
-Rysunek \Oznacz{rys}{#1}
+\newcommand*{\OznaczZdjecie}[2][Rysunek]{
+#1 \Oznacz{rys}{#2}
 }
     
 \newcommand*{\OznaczKod}[1]{
-listing \Oznacz{lst}{#1}
+\Oznacz{lst}{#1}
 }
 
 \newcommand*{\ListingFile}[2]{

@@ -7,6 +7,7 @@
     // Configure properties specific to VS Code.
     "vscode": {
       "settings": {
+        "workbench.colorTheme": "Default Dark Modern",
         "latex-workshop.latex.recipe.default": "lastUsed",
         "latex-workshop.latex.autoClean.run": "onBuilt",
         "latex-workshop.latex.build.rootfileInStatus": true,
@@ -14,9 +15,44 @@
         "latex-workshop.linting.lacheck.enabled": true,
         "latex-workshop.latex.tools": [
           {
+            "name": "GhostScript",
+            "command": "gs",
+            "args": [
+              "-sDEVICE=pdfwrite",
+              "-dCompatibilityLevel=1.5",
+              "-dNOPAUSE",
+              "-dQUIET",
+              "-dBATCH",
+              "-dPrinted=false",
+              "-sOutputFile=%DOCFILE%-compressed.pdf",
+              "%DOCFILE%.pdf"
+            ]
+          },
+          {
+            "name": "lualatex",
+            "command": "lualatex",
+            "args": [
+              "-interaction=nonstopmode",
+              "--shell-escape",
+              "-synctex=1",
+              "%DOCFILE%"
+            ]
+          },
+          {
+            "name": "lualatex-draft",
+            "command": "lualatex",
+            "args": [
+              "-interaction=nonstopmode",
+              "--shell-escape",
+              "-draftmode",
+              "%DOCFILE%"
+            ]
+          },
+          {
             "name": "pdflatex",
             "command": "pdflatex",
             "args": [
+              "--interaction=nonstopmode",
               "--shell-escape",
               "-synctex=1",
               "%DOCFILE%"
@@ -26,6 +62,7 @@
             "name": "pdflatex-draft",
             "command": "pdflatex",
             "args": [
+              "--interaction=nonstopmode",
               "--shell-escape",
               "-draftmode",
               "-synctex=1",
@@ -42,12 +79,31 @@
         ],
         "latex-workshop.latex.recipes": [
           {
+            "name": "lualatex-draft -> biber -> lualatex*2",
+            "tools": [
+              "lualatex-draft",
+              "biber",
+              "lualatex",
+              "lualatex",
+              "GhostScript"
+            ]
+          },
+          {
+            "name": "[Without biber] -> lualatex*2",
+            "tools": [
+              "lualatex",
+              "lualatex",
+              "GhostScript"
+            ]
+          },
+          {
             "name": "pdflatex-draft -> biber -> pdflatex-draft -> pdflatex",
             "tools": [
               "pdflatex-draft",
               "biber",
               "pdflatex-draft",
-              "pdflatex"
+              "pdflatex",
+              "GhostScript"
             ]
           },
           {
@@ -55,7 +111,8 @@
             "tools": [
               "pdflatex-draft",
               "pdflatex-draft",
-              "pdflatex"
+              "pdflatex",
+              "GhostScript"
             ]
           }
         ],

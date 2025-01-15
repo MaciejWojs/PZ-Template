@@ -1,0 +1,9 @@
+wygenerujesz mi na podstawie rozpisu tree strukture tak jak poniżej
+
+\fg[\textwidth]{rys/lokalizacja}{nazwa pliku png}{OZNACZnazwa pliku png}
+
+\OznaczZdjecie[]{OZNACZnazwa pliku png} %TODO: Oznacz zdjęcie
+
+\clearpage
+
+napisz czy rozumiesz i jaki ma byc nastepny krok //TEST UTF8: ą, ć, ę, ł, ń, ó, ś, ź, ż, Ą, Ć, Ę, Ł, Ń, Ó, Ś, Ź, Ż

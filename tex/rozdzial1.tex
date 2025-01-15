@@ -119,4 +119,82 @@ Następnym krokiem jest ustawienie w \TeX{}Studio kolejności budowania projektu
  
  
  
- 
+ %! Pobieranie PDF
+% ctrl + shift + ~
+% komenda: upload.sh
+
+%! SKRÓTY KLAWISZOWE
+% LINK do skrótów klawiszowych: https://github.com/James-Yu/latex-workshop/wiki/Snippets
+% ctrl+alt+j - przeniesienie z kodu do pdf
+% ctrl + click - przeniesienie z pdf do kodu (dokument.pdf)
+% zaznaczony fragment kodu -> ctrl+l -> ctrl+w
+% gdy kuror na sekcji itp. -> cltr + alt + ] - obniżenie sekcji
+% gdy kuror na sekcji itp. -> cltr + alt + [ - podniesienie sekcji
+% kopia lini kodu -> ctrl + shift + strzałka w dół
+\newpage
+\section*{Tutorial}		%1
+
+% * SPOSOBY UZYWANIA MAKRA HERE * # 
+% ? Listingi
+% Parametr #1: Opis listingu (wyświetla sie bezpośrednio pod listingiem)
+% Parametr #2 : Nazwa pliku oraz ID do oznaczania (wazne, zeby byl w katalogu kod oraz jego rozszerzenie to txt) 
+
+\ListingFile{OpisPromptu}{prompt}
+
+Tak wstawiamy listingi, za pomocą:
+
+\begin{verbatim}
+	ListingFile\{Opis listingu}{nazwa-pliku} 
+ \end{verbatim}
+
+wstawiamy listingi z plików z katalogu kod.
+
+Gdzie:
+\begin{verbatim}
+	{Opis listingu} - opis listingu wyświetlany pod listingiem
+	{nazwa-pliku} - nazwa pliku z katalogu kod i jednocześnie ID do oznaczania
+\end{verbatim}
+
+Tak oznaczamy listingi \OznaczKod{prompt} w tekście.\\Za pomocą:
+
+\begin{verbatim}
+	ListingFile\{Opis listingu}{nazwa-pliku} 
+\end{verbatim}
+
+gdzie:
+
+\begin{verbatim}
+	{nazwa-pliku} - nazwa pliku z katalogu kod i jednocześnie ID do oznaczania
+\end{verbatim}
+
+\clearpage
+% ? Zdjęcia
+% OPCJONALNY Parametr #1: Szerokość zdjęcia (domyślnie jest to szerokość paragrafu ale jak sie poda w [#1] to wtedy zmienia się na podaną wartość)
+% Parametr #2: Nazwa pliku z rozszerzeniem (podajemy katalog w którym jest plik i jego rozszerzenie np. rys/nazwa-rysunku.png)
+% Parametr #3: Opis tego co jest na rysunku (wyświetla sie bezpośrednio pod rysunkiem) 
+% Parametr #4: Identyfikator rysunku (do oznaczania zdjęć w tekście) 
+
+\fg{rys/nazwa-rysunku.png}{Opis tego co jest na rysunku}{id-rysunku}
+
+jest równe
+\fg[\textwidth]{rys/nazwa-rysunku.png}{Opis tego co jest na rysunku}{id-rysunku}
+\clearpage
+Tak wstawiamy zdjęcia, za pomocą:
+
+\begin{verbatim}
+	\fg{szerokość-rysunku}{nazwa-pliku}{Opis rysunku}{id-rysunku} 
+ \end{verbatim}
+
+Gdzie:
+\begin{verbatim}
+	{szerokość-rysunku} - szerokość rysunku domyślnie \textwidth
+	{nazwa-pliku} - nazwa pliku z katalogu rys i jego rozszerzenie
+	{Opis rysunku} - opis rysunku wyświetlany pod rysunkiem
+	{id-rysunku} - identyfikator rysunku
+\end{verbatim}
+
+Tak oznaczamy zdjęcia \OznaczZdjecie{id-rysunku} w tekście. Za pomocą:
+
+\begin{verbatim}
+	\OznaczZdjecie{id-rysunku}
+	\end{verbatim}

@@ -74,8 +74,10 @@
        
 %%%%%%%%%%%%%%%%%%% koniec treść główna dokumentu %%%%%%%%%%%%%%%%%%%%%
 	\newpage
-    \addcontentsline{toc}{section}{Literatura}  
-	\printbibliography
+% \addcontentsline{toc}{section}{Literatura}
+% Modified by: Maciej Wójs 
+%Wyświetlanie bibliografii jako "Literatura", w spisie treści wyświetla się podbnie do \section
+\printbibliography[heading=bibnumbered, label=Literatura, title=Literatura]
 
     \newpage
     \hypersetup{linkcolor=black}

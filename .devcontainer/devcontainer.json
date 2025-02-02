@@ -153,6 +153,7 @@
         "latex-workshop.hover.preview.enabled": true
       },
       "extensions": [
+        "MaciejWojs.MacroTeX",
         "github.vscode-github-actions",
         "GitHub.copilot-chat",
         "MS-CEINTL.vscode-language-pack-pl",
